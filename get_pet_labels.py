@@ -43,9 +43,10 @@ def get_pet_labels(image_dir):
     # Replace None with the results_dic dictionary that you created with this
     # function
     results_dic =dict()
-    filenames=listdir(image_dir)
-    pet_labels=[]
-    for pet_image in filenames:
+    filenames=listdir(image_dir)    
+    for pet_image in filenames: 
+        if pet_image[0]=='.':
+            continue
         low_pet_image = pet_image.lower()
         word_list_pet_image = low_pet_image.split("_")
         pet_name = ""
@@ -53,9 +54,7 @@ def get_pet_labels(image_dir):
             if word.isalpha():
                 pet_name += word + " "
         pet_name = pet_name.strip()
-        pet_labels.append(pet_name)
-        
-    for idx in range(0, len(filenames), 1):
-      if filenames[idx] not in results_dic:
-         results_dic[filenames[idx]] = [pet_labels[idx]]
+        if pet_image not in results_dic.keys():
+            results_dic[pet_image]=[pet_name]
+    
     return results_dic
